@@ -1,0 +1,84 @@
+/* 懂车分 디자인 토큰 (Figma 변수 기준). 1rem = 디자인 10px (화면 폭 731px 기준으로 비례 축소) */
+:root {
+  --dcd-background: #f2f5fc;
+  --dcd-header: #f3f4f9;
+  --dcd-surface: #ffffff;
+  --dcd-primary: #202126;
+  --dcd-secondary: #9a9ba0;
+  --dcd-placeholder: #cbccd1;
+  --dcd-required: #c96624;
+  --dcd-yellow: #ffcc32;
+  --dcd-gold: #c39728;
+  --dcd-tooltip: #fffaec;
+  --dcd-track: #e6e9f2;
+  --dcd-border: #cdcdd2;
+  --dcd-link: #2d438e;
+  --dcd-caption: #686a70;
+  --dcd-radius-card: 1.4rem;
+  --dcd-radius-button: 1.2rem;
+  --dcd-radius-tooltip: 0.36rem;
+  --dcd-spacing-stars: 1.4rem;
+  --font-sc: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-status: 'Roboto', 'Noto Sans SC', sans-serif;
+}
+
+html {
+  font-size: min(10px, calc(100vw / 73.1));
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--dcd-background);
+  color: var(--dcd-primary);
+  font-family: var(--font-sc);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  display: block;
+}
+
+.spacer {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 1px;
+}
+
+.card {
+  width: 70.3rem;
+  background: var(--dcd-surface);
+  border-radius: var(--dcd-radius-card);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 2.88rem;
+  line-height: 4.3rem;
+  color: var(--dcd-primary);
+  white-space: nowrap;
+}
+
+.required {
+  color: var(--dcd-required);
+}
