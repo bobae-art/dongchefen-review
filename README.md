@@ -16,7 +16,8 @@ pnpm generate   # 정적 빌드 → .output/public
 
 ## 배포
 
-`.github/workflows/deploy-pages.yml` 이 `main` 브랜치 푸시 시 GitHub Pages 로 자동 배포합니다.
-저장소 Settings → Pages → Source 를 **GitHub Actions** 로 설정해 주세요.
+`.github/workflows/deploy-pages.yml` 이 `main` 브랜치 푸시 시 정적 빌드를 `gh-pages` 브랜치로 푸시합니다.
+저장소 Settings → Pages → Source 가 **Deploy from a branch / gh-pages / (root)** 인지 확인해 주세요.
+배포 주소: https://bobae-art.github.io/dongchefen-review/
 다른 호스팅(Vercel, Netlify 등)에서는 `pnpm generate` 결과물 `.output/public` 을 그대로 올리면 됩니다.
 배포 경로가 루트가 아니면 `NUXT_APP_BASE_URL=/경로/` 환경변수로 지정합니다.

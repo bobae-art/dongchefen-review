@@ -6,16 +6,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,26 +24,18 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-      - name: Enable GitHub Pages (Actions build)
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - run: pnpm install --frozen-lockfile
       - name: Generate static site
         run: pnpm nuxt generate
         env:
           # 저장소 이름이 바뀌면 이 경로도 함께 바꿔 주세요.
           NUXT_APP_BASE_URL: /${{ github.event.repository.name }}/
-      - uses: actions/upload-pages-artifact@v3
+      # Pages API 권한 없이도 동작하도록 gh-pages 브랜치에 결과물을 푸시합니다.
+      # (Settings → Pages → Source: Deploy from a branch / gh-pages / root)
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: .output/public
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./.output/public
+          publish_branch: gh-pages
+          force_orphan: true
