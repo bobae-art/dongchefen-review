@@ -26,6 +26,10 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
+      - name: Enable GitHub Pages (Actions build)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - run: pnpm install --frozen-lockfile
       - name: Generate static site
         run: pnpm nuxt generate
