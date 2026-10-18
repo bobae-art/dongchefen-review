@@ -1,22 +1,16 @@
-export const RATING_ITEMS = ['外观', '内饰', '空间', '配置', '动力操控', '油耗'] as const
-export type RatingItem = (typeof RATING_ITEMS)[number]
+import { RATING_KEYS, type RatingKey } from '~/i18n/messages'
 
-export const CAR_MODELS = [
-  '比亚迪 秦PLUS DM-i',
-  '特斯拉 Model 3',
-  '丰田 凯美瑞',
-  '大众 朗逸',
-  '理想 L7',
-  '小米 SU7',
-]
+export { RATING_KEYS }
+export type RatingItem = RatingKey
 
 export const MIN_CHARS = 30
 export const BONUS_CHARS = 300
 
 export const useReviewForm = () => {
+  const t = useT()
   const car = useState<string | null>('review.car', () => null)
   const ratings = useState<Record<RatingItem, number>>('review.ratings', () =>
-    Object.fromEntries(RATING_ITEMS.map((k) => [k, 0])) as Record<RatingItem, number>,
+    Object.fromEntries(RATING_KEYS.map((k) => [k, 0])) as Record<RatingItem, number>,
   )
   const content = useState<string>('review.content', () => '')
   const showRatingTip = useState<boolean>('review.tip.rating', () => true)
@@ -24,7 +18,7 @@ export const useReviewForm = () => {
   const toast = useState<string>('review.toast', () => '')
 
   const charCount = computed(() => content.value.replace(/\s/g, '').length)
-  const allRated = computed(() => RATING_ITEMS.every((k) => ratings.value[k] > 0))
+  const allRated = computed(() => RATING_KEYS.every((k) => ratings.value[k] > 0))
   const canPublish = computed(() => !!car.value && allRated.value && charCount.value >= MIN_CHARS)
 
   let toastTimer: ReturnType<typeof setTimeout> | undefined
@@ -39,10 +33,10 @@ export const useReviewForm = () => {
   }
 
   const publish = () => {
-    if (!car.value) return showToast('请先选择车型')
-    if (!allRated.value) return showToast('请完成 6 项综合评分')
-    if (charCount.value < MIN_CHARS) return showToast(`还需写 ${MIN_CHARS - charCount.value} 字才能发布`)
-    showToast('发布成功！')
+    if (!car.value) return showToast(t.value.toastNeedCar)
+    if (!allRated.value) return showToast(t.value.toastNeedRating)
+    if (charCount.value < MIN_CHARS) return showToast(t.value.toastNeedChars(MIN_CHARS - charCount.value))
+    showToast(t.value.toastPublished)
   }
 
   return {

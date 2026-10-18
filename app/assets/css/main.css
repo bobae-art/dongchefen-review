@@ -22,6 +22,10 @@
   --font-status: 'Roboto', 'Noto Sans SC', sans-serif;
 }
 
+html[lang='ko'] {
+  --font-sc: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+}
+
 html {
   font-size: min(10px, calc(100vw / 73.1));
   -webkit-text-size-adjust: 100%;

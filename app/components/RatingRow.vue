@@ -4,14 +4,15 @@ import type { RatingItem } from '~/composables/useReviewForm'
 const props = defineProps<{ item: RatingItem }>()
 const asset = useAsset()
 const { ratings, setRating } = useReviewForm()
+const t = useT()
 const value = computed(() => ratings.value[props.item])
 const starUrl = `url(${asset('star.svg')})`
 </script>
 
 <template>
-  <div class="row" role="radiogroup" :aria-label="item">
+  <div class="row" role="radiogroup" :aria-label="t.items[item]">
     <div class="label">
-      <span class="label-text">{{ item }}</span>
+      <span class="label-text">{{ t.items[item] }}</span>
       <span class="required">*</span>
     </div>
     <span class="spacer" />
@@ -25,7 +26,7 @@ const starUrl = `url(${asset('star.svg')})`
         :style="{ '--star-url': starUrl }"
         role="radio"
         :aria-checked="n === value"
-        :aria-label="`${n}星`"
+        :aria-label="`${n}`"
         @click="setRating(item, n)"
       >
         <img :src="asset('star.svg')" alt="" class="star-img">

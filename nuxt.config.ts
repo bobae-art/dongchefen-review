@@ -22,11 +22,11 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Roboto:wght@400&display=swap',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400&display=swap',
         },
       ],
     },
   },
   experimental: { payloadExtraction: false },
-  nitro: { prerender: { routes: ['/'] } },
+  nitro: { prerender: { routes: ['/', '/ko'] } },
 })

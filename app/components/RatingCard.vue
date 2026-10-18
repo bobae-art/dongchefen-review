@@ -1,27 +1,28 @@
 <script setup lang="ts">
 const asset = useAsset()
 const { showRatingTip, showToast } = useReviewForm()
+const t = useT()
 </script>
 
 <template>
   <section class="card card-rating" aria-label="종합 평가">
     <div class="title-row">
-      <h2 class="card-title">综合评分</h2>
+      <h2 class="card-title">{{ t.ratingTitle }}</h2>
       <span class="spacer" />
-      <button type="button" class="help-link" @click="showToast('评分说明：1-5星，星越多评价越高')">
+      <button type="button" class="help-link" @click="showToast(t.ratingHelpToast)">
         <img :src="asset('help-icon.svg')" alt="" class="help-icon">
-        <span class="help-text">评分说明</span>
+        <span class="help-text">{{ t.ratingHelp }}</span>
       </button>
     </div>
     <div class="tip-slot">
       <NoticeBanner
         v-if="showRatingTip"
-        text="懂车分怎么评才合理？一篇教你轻松搞定！"
+        :text="t.ratingTip"
         @close="showRatingTip = false"
       />
     </div>
     <div class="rows">
-      <RatingRow v-for="item in RATING_ITEMS" :key="item" :item="item" />
+      <RatingRow v-for="item in RATING_KEYS" :key="item" :item="item" />
     </div>
   </section>
 </template>

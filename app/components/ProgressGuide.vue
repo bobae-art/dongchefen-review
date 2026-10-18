@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const asset = useAsset()
 const { charCount } = useReviewForm()
+const t = useT()
+const locale = useLocale()
 /* 트랙 폭 62.2rem 기준, 300자 달성 시 100% */
 const fillRatio = computed(() => Math.min(1, charCount.value / BONUS_CHARS))
 </script>
@@ -8,8 +10,13 @@ const fillRatio = computed(() => Math.min(1, charCount.value / BONUS_CHARS))
 <template>
   <section class="guide" aria-label="작성 안내 진행 표시">
     <div class="hint-row">
-      <img :src="asset('hint-bubble.svg')" alt="" class="hint-bubble">
-      <p class="hint-text">多写300字，可获更多曝光机会</p>
+      <template v-if="locale === 'zh'">
+        <img :src="asset('hint-bubble.svg')" alt="" class="hint-bubble">
+        <p class="hint-text">{{ t.hint }}</p>
+      </template>
+      <div v-else class="hint-bubble-css">
+        <span class="hint-text-css">{{ t.hint }}</span>
+      </div>
     </div>
     <div class="bar">
       <div class="track" />
@@ -21,9 +28,9 @@ const fillRatio = computed(() => Math.min(1, charCount.value / BONUS_CHARS))
       <img :src="asset('gift.png')" alt="" class="gift">
     </div>
     <div class="steps">
-      <span class="step-text">通过即有机会评为精华</span>
+      <span class="step-text">{{ t.step1 }}</span>
       <span class="spacer" />
-      <span class="step-text">评为超级精华，获得更多曝光机会</span>
+      <span class="step-text">{{ t.step2 }}</span>
     </div>
   </section>
 </template>
@@ -55,6 +62,40 @@ const fillRatio = computed(() => Math.min(1, charCount.value / BONUS_CHARS))
   position: absolute;
   left: 3.3rem;
   top: 0.4rem;
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+  color: var(--dcd-caption);
+  white-space: nowrap;
+}
+/* 한국어판: 문구 길이에 맞춰 늘어나는 말풍선 (원본 SVG 와 같은 색·두께·꼬리 위치) */
+.hint-bubble-css {
+  position: absolute;
+  left: 2.5rem;
+  top: 0;
+  height: 3.7rem;
+  padding: 0 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  background: var(--dcd-tooltip);
+  border: 0.11rem solid #e0bd53;
+  border-radius: 0.2rem;
+  box-sizing: border-box;
+}
+.hint-bubble-css::before,
+.hint-bubble-css::after {
+  content: '';
+  position: absolute;
+  left: 0.6rem;
+  top: 100%;
+  border-style: solid;
+  border-color: #e0bd53 transparent transparent transparent;
+  border-width: 0.8rem 0.7rem 0 0.7rem;
+}
+.hint-bubble-css::after {
+  margin-top: -0.15rem;
+  border-top-color: var(--dcd-tooltip);
+}
+.hint-text-css {
   font-size: 1.8rem;
   line-height: 2.8rem;
   color: var(--dcd-caption);

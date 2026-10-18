@@ -1,37 +1,37 @@
 <script setup lang="ts">
 const asset = useAsset()
 const { content, charCount, showGuideTip, showToast } = useReviewForm()
-const PLACEHOLDER = '语言简洁、对车型进行描述和评价。如果您的分项评分有4.5分以上或3分以下，建议对该分项进行重点描述。'
+const t = useT()
 const empty = computed(() => content.value.length === 0)
 const reached = computed(() => charCount.value >= MIN_CHARS)
 </script>
 
 <template>
   <section class="card card-review" aria-label="의견 작성">
-    <h2 class="title card-title">观点综述 <span class="required">*</span></h2>
+    <h2 class="title card-title">{{ t.reviewTitle }} <span class="required">*</span></h2>
     <div class="editor" :class="{ empty }">
       <img v-if="empty" :src="asset('pencil.svg')" alt="" class="pencil">
       <textarea
         v-model="content"
         class="textarea"
-        :placeholder="PLACEHOLDER"
-        aria-label="观点综述"
+        :placeholder="t.placeholder"
+        :aria-label="t.reviewTitle"
         spellcheck="false"
       />
     </div>
     <div class="count-row">
-      <p v-if="!reached" class="count-text">写满<span class="num">{{ MIN_CHARS }}</span>字，才能发布成功哦～</p>
-      <p v-else class="count-text">已写<span class="num">{{ charCount }}</span>字，可以发布啦～</p>
+      <p v-if="!reached" class="count-text">{{ t.countBefore.pre }}<span class="num">{{ MIN_CHARS }}</span>{{ t.countBefore.post }}</p>
+      <p v-else class="count-text">{{ t.countAfter.pre }}<span class="num">{{ charCount }}</span>{{ t.countAfter.post }}</p>
       <span class="spacer" />
-      <button type="button" class="guide-link" @click="showToast('精华攻略：真实体验 + 优缺点 + 具体场景')">
+      <button type="button" class="guide-link" @click="showToast(t.guideToast)">
         <img :src="asset('help-icon-2.svg')" alt="" class="guide-icon">
-        <span class="guide-text">精华攻略</span>
+        <span class="guide-text">{{ t.guideLink }}</span>
       </button>
     </div>
     <div class="bottom-tip">
       <NoticeBanner
         v-if="showGuideTip"
-        text="看精华攻略，写精华懂车分，轻松赚取上万积分！"
+        :text="t.guideTip"
         height="7.1rem"
         text-top="1.1rem"
         @close="showGuideTip = false"
@@ -103,9 +103,10 @@ const reached = computed(() => charCount.value >= MIN_CHARS)
 .guide-link {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.54rem;
   height: 3.8rem;
-  width: 13.5rem;
+  min-width: 13.5rem; /* 원본 폭. 긴 번역 문구는 내용만큼 늘어남 */
   flex-shrink: 0;
 }
 .guide-icon { width: 2.4rem; height: 2.4rem; }

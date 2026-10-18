@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const asset = useAsset()
 const { car } = useReviewForm()
+const t = useT()
 const open = ref(false)
 
 const pick = (model: string) => {
@@ -11,27 +12,27 @@ const pick = (model: string) => {
 
 <template>
   <section class="card card-car" aria-label="차량 선택">
-    <h2 class="title card-title">选择车型 <span class="required">*</span></h2>
+    <h2 class="title card-title">{{ t.carTitle }} <span class="required">*</span></h2>
     <button type="button" class="add-box" :class="{ selected: car }" @click="open = true">
       <template v-if="car">
         <span class="car-name">{{ car }}</span>
-        <span class="car-change">点击更换车型</span>
+        <span class="car-change">{{ t.changeCar }}</span>
       </template>
       <template v-else>
         <img :src="asset('plus.svg')" alt="" class="plus">
-        <span class="add-text">添加车型</span>
+        <span class="add-text">{{ t.addCar }}</span>
       </template>
     </button>
 
     <Transition name="sheet">
         <div v-if="open" class="sheet-mask" @click.self="open = false">
-          <div class="sheet" role="dialog" aria-label="选择车型">
+          <div class="sheet" role="dialog" :aria-label="t.sheetTitle">
             <div class="sheet-head">
-              <span class="sheet-title">选择车型</span>
-              <button type="button" class="sheet-close" @click="open = false">取消</button>
+              <span class="sheet-title">{{ t.sheetTitle }}</span>
+              <button type="button" class="sheet-close" @click="open = false">{{ t.cancel }}</button>
             </div>
             <ul class="sheet-list">
-              <li v-for="m in CAR_MODELS" :key="m">
+              <li v-for="m in t.carModels" :key="m">
                 <button type="button" class="sheet-item" :class="{ on: m === car }" @click="pick(m)">{{ m }}</button>
               </li>
             </ul>

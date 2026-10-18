@@ -1,26 +1,27 @@
 <script setup lang="ts">
 const asset = useAsset()
 const { publish, showToast } = useReviewForm()
+const t = useT()
 </script>
 
 <template>
   <nav class="top-nav" aria-label="상단 내비게이션">
     <div class="nav-left">
-      <button type="button" class="close-btn" aria-label="关闭" @click="showToast('已关闭（演示）')">
+      <button type="button" class="close-btn" aria-label="关闭" @click="showToast(t.toastClose)">
         <img :src="asset('close.svg')" alt="" class="ic-close">
       </button>
-      <div class="logo" aria-label="懂车分">
-        <span class="logo-text">懂车分</span>
+      <div class="logo" :aria-label="t.brand">
+        <span class="logo-text">{{ t.brand }}</span>
         <img :src="asset('logo-curve.svg')" alt="" class="logo-curve">
       </div>
-      <button type="button" class="switch-btn" aria-label="切换" @click="showToast('切换类型（演示）')">
+      <button type="button" class="switch-btn" aria-label="切换" @click="showToast(t.toastSwitch)">
         <img :src="asset('switch-arrow.svg')" alt="" class="ic-switch">
       </button>
     </div>
     <span class="spacer" />
     <button type="button" class="publish-btn" @click="publish">
       <img :src="asset('paper-plane.svg')" alt="" class="ic-plane">
-      <span class="publish-text">发布</span>
+      <span class="publish-text">{{ t.publish }}</span>
     </button>
   </nav>
 </template>
