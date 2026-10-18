@@ -1,0 +1,1 @@
+import{N as e,Q as t,V as n,n as r}from"./CS8U4plQ.js";import{n as i,r as a,t as o}from"./aVSpZ1Rj.js";var s=n({__name:`index`,setup(n){i().value=`zh`;let s=a.zh;return r({htmlAttrs:{lang:s.htmlLang},title:s.title,meta:[{name:`description`,content:s.description}]}),(n,r)=>{let i=o;return t(),e(i)}}});export{s as default};
